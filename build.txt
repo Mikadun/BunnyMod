@@ -1,0 +1,3 @@
+displayName = Bunny
+author = Mikadun
+version = 0.1
