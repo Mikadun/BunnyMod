@@ -2,6 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using BunnyMod.Buffs.Mounts.Transformations;
+
 
 namespace BunnyMod.Mounts.Transformations
 {
@@ -10,7 +12,7 @@ namespace BunnyMod.Mounts.Transformations
         public override void SetDefaults()
         {
             Mount.MountData mount = this.mountData;
-            mount.buff = BuffID.Ironskin;
+            mount.buff = ModContent.BuffType<BunnyTransformationBuff>();
             mount.heightBoost = -26;
             mount.fallDamage = 0.25f;
             mount.runSpeed = 2.5f;

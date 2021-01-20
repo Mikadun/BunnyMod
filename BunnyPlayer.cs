@@ -7,16 +7,26 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System.Collections.Generic;
 using BunnyMod.Mounts.Transformations;
+using BunnyMod.Buffs.Mounts.Transformations;
 
 namespace BunnyMod
 {
-    public class BunnyModPlayer : ModPlayer
+    public class BunnyPlayer : ModPlayer
     {
-        public bool transformation = true;
+        public bool transformation;
+        public bool explosiveBunnyTransformation;
+        public int explosiveBunnyExplosionDamage;
+
+        public override void ResetEffects()
+        {
+            transformation = false;
+            explosiveBunnyTransformation = false;
+            explosiveBunnyExplosionDamage = 250;
+        }
 
         public override void OnRespawn(Player player)
         {
-            player.mount.SetMount(ModContent.MountType<BunnyTransformation>(), player, false);
+            player.AddBuff(ModContent.BuffType<ExplosiveBunnyTransformationBuff>(), 10, true);
         }
 
         public override void OnEnterWorld(Player player)
@@ -24,14 +34,14 @@ namespace BunnyMod
             OnRespawn(player);
         }
 
-        private void ReserEffects()
+        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
         {
-            transformation = true;
-        }
+            if (explosiveBunnyTransformation)
+            {
+                Projectile.NewProjectile(player.position, Vector2.Zero, ProjectileID.Explosives, explosiveBunnyExplosionDamage, player.whoAmI);
+            }
 
-        public override void Initialize()
-        {
-            //OnRespawn(player);
+            base.Kill(damage, hitDirection, pvp, damageSource);
         }
 
         public override void ModifyDrawLayers(List<PlayerLayer> layers)
