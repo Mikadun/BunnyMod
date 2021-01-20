@@ -16,7 +16,7 @@ namespace BunnyMod
 
         public override void OnRespawn(Player player)
         {
-            player.mount.SetMount(ModContent.MountType<SquirrelTransformation>(), player, false);
+            player.mount.SetMount(ModContent.MountType<BunnyTransformation>(), player, false);
         }
 
         public override void OnEnterWorld(Player player)
